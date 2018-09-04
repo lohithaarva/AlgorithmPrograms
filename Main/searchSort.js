@@ -103,10 +103,10 @@ function bubblesort() {
     var choice = prompt(" Enter your choice 1 for interger \r\n Enter your choice 2 for string ==> ")
     if (choice == 1)
      {
-        
+    
         var len = prompt("Enter the length of the array ===> ");
-        for (var i = 0; i < len; i++) {
-        arr[i] = parseInt(prompt(`Enter ${(i)}th value `)) 
+        for (var i = 0; i < len ; i++) {
+        var x = parseInt(prompt(`Enter ${(i)}th value `)) 
         arr.push(x);
         }
 
