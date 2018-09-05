@@ -5,12 +5,12 @@ var read= readline.createInterface({
     output:process.stdout
 });
 
-function binary()
+function toBinary()
 {
     read.question("Enter decimal number: ", function(num){
             var a=parseInt(num);
-            util.binary(read,a);
+            util.toBinary(read,a);
             read.close();
     })
 }
-binary();
+toBinary();

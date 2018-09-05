@@ -3,17 +3,18 @@
  * @var {Class} prompt class instance of the prompt
  */
 module.exports = {
-
-anagram: function(string1,string2)
-{
-/** 
+    /** 
 *@description An anagram detection, One string is an anagram of another if the second is simply a
 rearrangement of the first.
 *@param string1 stores the first string from the user
 *@param string2 stores the second string from the user
 */
-    
-    if(string1!=NaN && string2!=NaN) //accepts only string
+
+anagram: function(string1,string2)
+{
+    var reg = /[0-9]/g;
+    var reg1 = /[!@#$%^&*()_+{}[]:"<>?]/g;
+    if(string1.search(reg) == -1 && string2.search(reg1) == -1) //accepts only string
     {
         if(string1.toLowerCase().split('').sort().join('').trim() === string2.toLowerCase().split('').sort().join('').trim())
         {
@@ -39,9 +40,10 @@ rearrangement of the first.
 prime : function( range1, range2)
 {
     var result = new Array(); //creation of a new empty array
-    if (range2 <= 1000)      // checks if the final range exceeds more than the limited range
+    
+    if (parseInt(range2) <= 1000)      // checks if the final range exceeds more than the limited range
     {
-    for(var i = 2;i <=range2; i++) 
+    for(var i = parseInt(range1);i <=range2; i++) 
     {
         prime = 0;
         
@@ -95,7 +97,7 @@ else
             }
         }
     }
-    // checks for palindrome 
+    // checks for palindrome read
        for (var k =0; k < arr1.length; k++){                                                                     
             var rev, sum =0;
             var newarr = arr1[k];
@@ -199,47 +201,47 @@ bubble: function (arr, n) {
 /*********************************************************************************************/
 /**
 *@description To know the day of the entered date
-*@param m hods the value of month
-*@param d holds the date of the year
-*@param y holds the year
+*@param month hods the value of month
+*@param date holds the date of the year
+*@param year holds the year
 */
-    dayOfWeek: function (m, d, y) {
-        var y0, m0, d0, x,n;
-        // evaluation of the formula
-        n=(Math.floor(14 - m) / 12);
-        n=parseInt(n)
-        y0 = (y - n );
-        var y0=parseInt(y0);
+calender : function(date,month,year)
+{
+    var a = Math.floor((14 - month)/ 12);
+    var y = year - a;
+    var m = month + 12 * a -2;
+    day = (date + y + Math.floor(y/4) - Math.floor(y / 100) + Math.floor(year / 400) + Math.floor ((31 * m) / 12)) % 7;
 
-        x = (y0 + (Math.floor(y0 / 4) - Math.floor(y0 / 100) + Math.floor(y0 / 400)));
-        var x = parseInt(x)
+ switch(parseInt(day))
+    {
+       
+        case 0 : console.log("Sunday")
+        break;
 
-        m0 = ((m + (12 * n)) - 2);
-        var m0 = parseInt(m0)
+        case 1 : console.log('Monday')
+        break;
 
-        d0 = (d + x + Math.floor((31 * m0) / 12))%7
-        var d0 = parseInt(d0)
-     
-        switch (parseInt(d0)) 
-        {
-            case 0: console.log("sunday");
-                break;
-            case 1: console.log("Monday");
-                break;
-            case 2: console.log("Tuesday");
-                break;
-            case 3: console.log("Wednesday");
-                break;
-            case 4: console.log("Thursday");
-                break;
-            case 5: console.log("Friday");
-                break;
-            case 6: console.log("Saturday");
-                break;
-            default:console.log("Invalid date")
-            break;
-        } 
-    },
+        case 2 : console.log('Tuesday')
+        break;
+
+        case 3 : console.log('Wednesday')
+        break;
+
+        case 4 : console.log('Thursday')
+        break;
+
+        case 5 : console.log('Friday')
+        break;
+
+        case 6 : console.log('Saturday')
+        break;
+
+        default : 
+        break;
+    }
+
+
+},
     
 /****************************************************************************************/
 /**
@@ -322,52 +324,105 @@ dosqrt:function(c)
 /**
 *@description To convert decimal to binary form 
 *@param number holds a decimal form from the user
+*@param read takes the input 
 */
-toBinary : function(number)
-{
-    var arr1 = new Array();
-    var arr = new Array();
-    var i = 0;
-    while( number > 0)
+binary: function(read,number)
     {
-        arr [i] = Math.floor(number % 2);
-        number = Math.floor(number / 2);
-        i++;
-    }
-    for (var j = i-1; j>=0; j--)
+        var a, sum=0;
+        var arr=[], arr1=[];
+        while(number>0)
+        {
+            a=((number%2));
+            arr.unshift(a);
+            number=(Math.floor(number/2));
+        }
+        var t=(Number(arr.length));
+        for(var i=0; i<(8-t); i++)
+        {
+            arr.unshift(0);     //making it a complete 8-bits binary
+        }
+        str=arr.toString();     //converting array to string
+        arr1=[];
+        arr1=str.split(',');
+        
+        var m=parseInt(Math.floor(arr1.length/2));  //dividing the binary array into two nibbles
+        var mid1=[], mid2=[];
+        mid1.length=m;      //creating an array of mid-length of the original array
+        mid2.length=parseInt(arr1.length-m);    //creating an array of mid-length of the original array
+        for(var i=0; i<m; i++)  
+        {
+            mid1.push(arr1[i]);     //pushing half of the elements to mid1
+        }
+        for(var j=m; j<arr1.length; j++)
+        {
+            mid2.push(arr1[j]);     //pushing other half elements to mid2
+        }
+        str1=mid1.join('');     //converting mid1 array to string str1
+        str2=mid2.join('');     //converting mid2 array to string str2
+        var mid3=[], mid4=[];
+        mid3.push(str1);        //pushing str1 to mid3 array 
+        console.log("Nibble 1: "+mid3);
+        mid4.push(str2);        //pushing str2 to mid4 array
+        console.log("Nibble 2: "+mid4);
+        for(var c=0,d=0; c<mid3.length, d<mid4.length; c++, d++)       
+        {
+            /**
+             * @description swapping both the mid3 and mid4 elements
+             */
+            var temp=mid3[c];
+            mid3[c]=mid4[d];
+            mid4[d]=temp;
+        }
+        var string=mid3+mid4;   //concatinating mid3 and mid4
+        console.log("Binary formed after swapping the nibbles= "+ string);
+        array1=string.split('');
+        
+        
+            var count=0;
+            for(var i=array1.length-1; i>=0; i--)
+            {
+                sum=sum+(array1[i]*(Math.pow(2,(count))));
+                count++;
+            }
+            console.log("Decimal Equivalent after swapping the nibbles= "+sum);
+            this.isPower(sum);
+            read.close();
+    },
+    power: function(val)
     {
-      arr1.push( arr[j]);
-    }
-    console.log(String(arr1.reverse()).replace(/\, /g, " "));
-
-    // Inbuilt method to convert decimal to binary number
-   /* console.log (arr[j]);
-    { console.log (arr[j]);
-      console.log (arr[j]);id positive number ")
-    } console.log (arr[j]);
-    else if (number > 0)
+        var a=1;
+        for(var i=0; i<val; i++)
+        {
+            a=a*2;
+        }
+        return a;
+    },
+    isPower: function(val)  //function to check whether the number obtained is a power of 2
     {
-        number = parseInt(number);
-        let result = number.toStringundefined(2);
-        console.log("The number represented in binary is ==> " +result)
-
-    } */
-},
-/********************************************************************************************/
-/**
-*@description Swap nibbles and find the new number.
-*@param number holds a decimal form from the user
-*/
-swapNibbles : function(number)
-{
-    
-    return ((number & 0x0F) << 4 | (number & 0xF0) >> 4);
-    
-},
+        var temp=val;
+        var count=0;
+        if(val%2==0)
+        {
+            while(val%2==0)
+            {
+                count++;
+                val/=2;
+            }
+            if(val==1)
+            {
+                console.log('\nit is a power of 2: 2^ '+count+"= "+temp);
+            }
+            else{
+                console.log("Not a power of 2");
+            }
+        }else{
+            console.log("it is not a power of 2");
+        }
+    },
 /***************************************************************************************** */
 /**
 *@description Read in a list of words from File.
-*@param arr holds the elements inserted
+*@param arr holds the elements inserted in the file
 *@param string holds the string elements in the text file
 */
 binaryWord: function(arr,string)
@@ -527,11 +582,15 @@ Change
       console.log("Total number of notes " + count );
    },
 /********************************************************************************************/
+/**@description Guesses the number by asking n number of questions
+*@param high holds greater than the mid element
+*@param low holds smaller than the mid element
+*/
 guessNumber : function(low, high , readlineSync)
 {
     mid = Math.floor((low + high) / 2);
-    console.log(`Is your number equal to ${(mid)}, Press 0 or if less, press 1 or if greater`);
-    var temp = readlineSync.question("Enter your option");
+    console.log(`Is your number equal to ${(mid)}, Press 0 or if less, press 1 or if greater `);
+    var temp = readlineSync.question("Enter your option ");
     if (temp == 0)
     {
         console.log(" Your number is :" +mid);
@@ -542,7 +601,7 @@ guessNumber : function(low, high , readlineSync)
     }
     else if(temp == 2)
     {
-        this.guessNumber(mid+1, high, readlineSync);
+        this.guessNumber(mid+1, high, reareaddlineSync);
     }
     else
     {
@@ -550,6 +609,10 @@ guessNumber : function(low, high , readlineSync)
     }
 },
 /*********************************************************************************************/
+/**@description To Merge Sort an array, we divide it into two halves, sort the two halves
+independently, and then merge the results to sort the full array.
+*@param size holds the size of the array
+*/
 mergeSort : function(size)
     {
         var prompt=require('prompt-sync')();
@@ -563,11 +626,11 @@ mergeSort : function(size)
            // console.log("before merge arr len "+arr.length);
             this.merge((arr));
             //console.log("after merge arr len "+arr.length);
-            arr.forEach(element =>
+            arr.forEach(element => 
                 {
-            
-                    console.log(parseInt(element));
+                console.log(parseInt(element));
                 });
+                
     },  
     merge : function(arr)
     {
@@ -624,8 +687,64 @@ mergeSort : function(size)
             j++;
         }
     },
+/*******************************************************************************************/
+/**@description code to convert decimal to binary
+*@param number takes an decimal number from the user
+*/
 
+toBinary: function(read,number)
+    {
+        var a, sum=0;
+        var arr=[], arr1=[];
+        while(number>0)
+        {
+            a=((number%2));
+            arr.unshift(a);
+            number=(Math.floor(number/2));
+        }
+        var t=(Number(arr.length));
+        for(var i=0; i<(8-t); i++)
+        {
+            arr.unshift(0);     //making it a complete 8-bits binary
+        }
+        str=arr.toString();     //converting array to string
+        arr1=[];
+        arr1=str.split(',');
+        
+        var m=parseInt(Math.floor(arr1.length/2));  //dividing the binary array into two nibbles
+        var mid1=[], mid2=[];
+        mid1.length=m;      //creating an array of mid-length of the original array
+        mid2.length=parseInt(arr1.length-m);    //creating an array of mid-length of the original array
+        for(var i=0; i<m; i++)  
+        {
+            mid1.push(arr1[i]);     //pushing half of the elements to mid1
+        }
+        for(var j=m; j<arr1.length; j++)
+        {
+            mid2.push(arr1[j]);     //pushing other half elements to mid2
+        }
+        str1=mid1.join('');     //converting mid1 array to string str1
+        str2=mid2.join('');     //converting mid2 array to string str2
+        var mid3=[], mid4=[];
+        mid3.push(str1);        //pushing str1 to mid3 array 
+        console.log("Nibble 1: "+mid3);
+        mid4.push(str2);        //pushing str2 to mid4 array
+        console.log("Nibble 2: "+mid4);
+        for(var c=0,d=0; c<mid3.length, d<mid4.length; c++, d++)       
+        {
+            /**
+             * @description swapping both the mid3 and mid4 elements
+             */
+            var temp=mid3[c];
+            mid3[c]=mid4[d];
+            mid4[d]=temp;
+        }
+        var string=mid3+mid4;   //concatinating mid3 and mid4
+        console.log("Binary formed after swapping the nibbles= "+ string);
+        array1=string.split('');
+    }
 }
+      
 
 
 

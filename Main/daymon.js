@@ -1,18 +1,42 @@
 var prompt = require('prompt-sync')();
 var utility = require('../UtilityAlgo/utilityAlgo.js')
-function dayOfWeek()
+function calender()
 {
-        var m = prompt("Enter month of the date ==> ")
-        m = parseInt(m);
-        var d = prompt("Enter date ==> ")
-        d = parseInt(d);
-        var y = prompt("Enter year of the date ==>")
-        y = parseInt(y);
-        var day = utility.dayOfWeek(m, d, y);
-        
-}
+    var date = prompt("Enter date ==> ")
+    date = parseInt(date);
+    var month = prompt("Enter month ==> ")
+    month = parseInt(month);
+    var year = prompt("Enter year of the date ==>")
+    year = parseInt(year);
+    //var day = utility.calender(date, month, year);
+    
+    if(year % 4 == 0 && (year % 100 !=0 || year % 400 ==0)) //logic to find leap year
+    {
+        if (date > 0 && date < 32 && month < 13)
+        {
+            utility.calender(date, month , year);
+        }
+        else{
+            console.log("Invalid date");
+    
+        }
 
-        
-      
-dayOfWeek();
+    }
+    else if (date >= 29 && month === 2)
+    {
+        console.log("Date does'nt exsit");
+    }
+    else if (date >= 31 && (month == 4 || month ==6 || month ==9 || month == 11))
+    {
+        console.log("Invalid date");
+    }
+    else if(date > 0 && date < 32)
+    {
+        utility.calender(date, month , year);
+    }
+    else{
+        console.log("Invalid date");
+    }
+}      
+calender();
 
